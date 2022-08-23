@@ -1,0 +1,63 @@
+Configuration:
+  # Log level
+  status: all
+  # Monitor interval, in seconds
+  monitorinterval: 10
+
+  # Global variables
+  Properties:
+    # Default configuration (for development environment)
+    Property:
+      - name: log.level.console
+        value: all
+      # Log path
+      - name: log.path
+        value: logs
+      # Project name
+      - name: project.name
+        value: SpringDemo
+  # Log output
+  Appenders:
+    # Console output
+    Console:
+      name: CONSOLE
+      target: SYSTEM_OUT
+      ThresholdFilter:
+        level:  ${sys:log.level.console}
+        onMatch: ACCEPT
+        onMismatch: DENY
+      PatternLayout:
+        # Log template
+        pattern: "%highlight{%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p %t (%F:%L) - %m%n}{STYLE=Logback}"
+    # File output
+    RollingFile:
+      - name: ROLLING_FILE
+        ignoreExceptions: false
+        fileName: ${log.path}/${project.name}.log
+        filePattern: "${log.path}/${project.name}-%d{yyyy-MM-dd}-%i.log"
+        PatternLayout:
+          pattern: "%highlight{%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p %t (%F:%L) - %m%n}{STYLE=Logback}"
+        Policies:
+          SizeBasedTriggeringPolicy:
+            # File size exceeds which will be rolled over
+            size: "100 MB"
+        DefaultRolloverStrategy:
+          # Maximum number of files per day
+          max: 5
+          # Delete rule
+          Delete:
+            # Delete files under this path
+            basePath: ${log.path}
+            maxDepth: 2
+            IfFileName:
+              # Delete files matching this pattern
+              glob: "${project.name}-*.log"
+            IfLastModified:
+              # Keep files for this amount of time
+              age: "20d"
+  Loggers:
+    Root:
+      level: info
+      AppenderRef:
+        - ref: CONSOLE
+        - ref: ROLLING_FILE
