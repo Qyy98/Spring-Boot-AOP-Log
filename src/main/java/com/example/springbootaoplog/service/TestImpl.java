@@ -1,5 +1,6 @@
-package com.example.springbootaoplog;
+package com.example.springbootaoplog.service;
 
+import com.example.springbootaoplog.service.TestService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
  * @Author QianYiyu
  */
 @Service
-public class TestImpl implements TestService{
+public class TestImpl implements TestService {
     @Override
     public void method1() {
         System.out.println("Method1 Body");

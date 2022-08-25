@@ -1,4 +1,4 @@
-package com.example.springbootaoplog;
+package com.example.springbootaoplog.others;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 public class LogAspect {
     private final Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
-    @Pointcut("execution(* com.example.springbootaoplog.TestService.method1())")
+    @Pointcut("execution(* com.example.springbootaoplog.service.TestService.method1())")
     public void pointCut() {}
 
     @Around("pointCut()")
@@ -34,19 +34,19 @@ public class LogAspect {
         logger.info("Around After " + methodName);
     }
 
-    @Before("execution(* com.example.springbootaoplog.TestService.method2())")
+    @Before("execution(* com.example.springbootaoplog.service.TestService.method2())")
     public void before(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         logger.info("Before " + methodName);
     }
 
-    @After("execution(* com.example.springbootaoplog.TestService.method2())")
+    @After("execution(* com.example.springbootaoplog.service.TestService.method2())")
     public void after(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         logger.info("After " + methodName);
     }
 
-    @AfterThrowing("execution(* com.example.springbootaoplog.TestService.method3())")
+    @AfterThrowing("execution(* com.example.springbootaoplog.service.TestService.method3())")
     public void afterThrowing(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         logger.error("Throwing Exception By " + methodName);
